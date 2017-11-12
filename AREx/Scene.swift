@@ -8,6 +8,7 @@
 
 import SpriteKit
 import ARKit
+import GameplayKit
 
 class Scene: SKScene {
     
