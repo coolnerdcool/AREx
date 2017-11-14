@@ -63,10 +63,14 @@ class Scene: SKScene {
         
         guard let sceneView = self.view as? ARSKView else {return}
         
-        //1.
-        //2.
-        //3.
-        //4.
+        //1.    random number generator
+        let ranNum = GKRandomSource.sharedRandom()
+        //2.    matrix random x rotation
+        let rotateX = SCNMatrix4ToGLKMatrix4(SCNMatrix4MakeRotation(2.0 * Float.pi * random.nextUniform() , 1, 0, 0))
+        //3.    matrix random y rotation
+        let rotateY = SCNMatrix4ToGLKMatrix4(SCNMatrix4MakeRotation(2.0 * Float.pi * random.nextUniform(), 0, 1, 0))
+        //4.    combine both matrix
+        let rotation
         //5.
         //6.
         //7.
