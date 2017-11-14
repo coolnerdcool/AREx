@@ -21,6 +21,8 @@ class Scene: SKScene {
         }
     }
     
+    let startTime = Date()
+    
     
     
     override func didMove(to view: SKView) {
@@ -47,6 +49,29 @@ class Scene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+       
+        guard let touch = touches.first else{return}
+        let location = touch.location(in: self)
+        print("\(location.x),\(location.y)")
+        
+        let hit = nodes(at: location)
+        
+        if let sprite = hit.first{
+            let scaleOut = SKAction.scale(to: 2, duration: 0.4)
+            let fadeOut = SKAction.fadeOut(withDuration: 0.4)
+            let remove = SKAction.removeFromParent()
+            
+            let groupAction = SKAction.group([scaleOut, fadeOut])
+            let sequenceAction = SKAction.sequence([groupAction, remove])
+            
+            sprite.run(sequenceAction)
+            targetsCount -= 1
+            
+        }
+        
+        
+        
+        
         
     }
     
