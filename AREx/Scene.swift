@@ -64,17 +64,22 @@ class Scene: SKScene {
         guard let sceneView = self.view as? ARSKView else {return}
         
         //1.    random number generator
-        let ranNum = GKRandomSource.sharedRandom()
+        let random = GKRandomSource.sharedRandom()
         //2.    matrix random x rotation
-        let rotateX = SCNMatrix4ToGLKMatrix4(SCNMatrix4MakeRotation(2.0 * Float.pi * random.nextUniform() , 1, 0, 0))
+        let rotateX = simd_float4x4(SCNMatrix4MakeRotation(2.0 * Float.pi * random.nextUniform() , 1, 0, 0))
         //3.    matrix random y rotation
-        let rotateY = SCNMatrix4ToGLKMatrix4(SCNMatrix4MakeRotation(2.0 * Float.pi * random.nextUniform(), 0, 1, 0))
+        let rotateY = simd_float4x4(SCNMatrix4MakeRotation(2.0 * Float.pi * random.nextUniform(), 0, 1, 0))
         //4.    combine both matrix
-        let rotation
-        //5.
-        //6.
-        //7.
-        //8.
+        let rotation = simd_mul(rotateX, rotateY)
+        //5.    1.5 translation in screen direction
+        var translation = matrix_identity_float4x4
+        translation.columns.3.z = -1.5
+        //6.    change rotation of step 4 with step 5
+        let finalTransform = simd_mul(rotation,translation)
+        //7.    create anchor point
+        let anchor = ARAnchor(transform: finalTransform)
+        //8.    add anchor to scene
+        sceneView.session.add(anchor: anchor)
         
         
     }
