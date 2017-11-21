@@ -67,6 +67,11 @@ class Scene: SKScene {
             sprite.run(sequenceAction)
             targetsCount -= 1
             
+            if targetsCreated == 25 && targetsCount == 0 {
+                    gameOver()
+            }
+            
+            
         }
         
         
@@ -107,7 +112,32 @@ class Scene: SKScene {
         sceneView.session.add(anchor: anchor)
         
         
+        
     }
+    
+    func gameOver(){
+        
+        //  hide remainingLabel
+        remainingLabel.removeFromParent()
+        
+        //  create Game Over image
+        let gameOver = SKSpriteNode(imageNamed: "gameover")
+        addChild(gameOver)
+        
+        //  calculate Game Over Time
+        let timeTaken = Date().timeIntervalSince(startTime)
+        let timeTakenLabel = SKLabelNode(text: "Time taken: \(timeTaken) seconds.")
+        timeTakenLabel.color = .white
+        timeTakenLabel.position = CGPoint(x: +view!.frame.maxX - 50,
+                                          y: -view!.frame.midY + 50)
+        addChild(timeTakenLabel)
+        
+        
+        //  show Game Over Time
+        
+        
+    }   //  gameOver() ends
+
     
     
     
